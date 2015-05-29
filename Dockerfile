@@ -1,1 +1,1 @@
-FROM andyshinn/alpine-abuild
+FROM boggart/alpine-abuild-32bit
