@@ -4,6 +4,8 @@ install:
   - curl -sLo - https://github.com/moul/travis-docker/raw/master/install.sh | sh -xe
 
 script:
+  - echo $RSA_PRIVATE_KEY > abuild.rsa
+  - echo $RSA_PUBLIC_KEY > abuild.rsa.pub
   - echo "==> Building Package..."
   - ./run 'docker build -t pkg . && docker run --name pkg -v $(pwd):/packages pkg'
 
