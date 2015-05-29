@@ -1,13 +1,13 @@
-# Maintainer: Glider Labs <team@gliderlabs.com>
+# Maintainer: Boggart <github.com/Boggart>
 
 pkgname="glibc"
 pkgver="2.21"
-pkgrel="2"
+pkgrel="4"
 pkgdesc="GNU C Library compatibility layer"
-arch="x86_64"
-url="https://github.com/gliderlabs/alpine-glibc"
+arch="i686"
+url="https://github.com/boggart/alpine-pkg-glibc-32bit"
 license="GPL"
-source="http://mirrors.kernel.org/archlinux/core/os/x86_64/glibc-${pkgver}-${pkgrel}-${arch}.pkg.tar.xz
+source="http://mirrors.kernel.org/archlinux/core/os/i686/glibc-${pkgver}-${pkgrel}-${arch}.pkg.tar.xz
 ld.so.conf"
 subpackages="$pkgname-bin"
 triggers="$pkgname-bin.trigger=/usr/glibc/usr/lib"
@@ -15,7 +15,7 @@ triggers="$pkgname-bin.trigger=/usr/glibc/usr/lib"
 package() {
   mkdir -p "$pkgdir"/usr/glibc
   mkdir "$pkgdir"/etc
-  mkdir "$pkgdir"/lib64
+  mkdir "$pkgdir"/lib
   cp -a "$srcdir"/usr "$pkgdir"/usr/glibc/usr
   rm -rf "$pkgdir"/usr/glibc/usr/lib/systemd \
     "$pkgdir"/usr/glibc/usr/lib/gconv \
@@ -28,7 +28,7 @@ package() {
     "$pkgdir"/usr/glibc/usr/include \
     "$pkgdir"/usr/glibc/usr/share
   "$srcdir"/usr/bin/ldconfig -r "$pkgdir" -C /etc/ld.so.cache /usr/glibc/usr/lib
-  ln -s /usr/glibc/usr/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib64/ld-linux-x86-64.so.2
+  ln -s /usr/glibc/usr/lib/ld-linux.so.2 ${pkgdir}/lib/ld-linux.so.2
 }
 
 bin() {
@@ -38,5 +38,5 @@ bin() {
   cp -La "$srcdir"/ld.so.conf "$subpkgdir"/etc/
 }
 
-md5sums="cd2bef93120db7401bd7a4451e97dab4  glibc-2.21-2-x86_64.pkg.tar.xz
-fda27293b95f89c7a61a0d379d1c3bde  ld.so.conf"
+md5sums="79dc04070422bf18c11a0b3a49716cd9  glibc-2.21-4-i686.pkg.tar.xz
+ba6a1612034f2ad8c7efad392e278103  ld.so.conf"

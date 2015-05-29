@@ -1,0 +1,19 @@
+sudo: true
+
+install:
+  - curl -sLo - https://github.com/moul/travis-docker/raw/master/install.sh | sh -xe
+
+script:
+  - echo "==> Building Package..."
+  - ./run 'docker build -t pkg . && docker run --name pkg -v $(pwd):/packages pkg'
+
+before_deploy:
+  - export RELEASE_PKG_FILE=$(ls *.apk)
+  - echo "==> Deploying $RELEASE_PKG_FILE to GitHub releases..."
+deploy:
+  provider: releases
+  api_key: "${GHTOKEN}"
+  file_glob: true
+  file: "${RELEASE_PKG_FILE}"
+  on:
+    tags: true
